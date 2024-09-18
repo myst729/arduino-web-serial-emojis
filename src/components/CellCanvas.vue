@@ -8,11 +8,11 @@ const props = defineProps<{
 }>()
 const emits = defineEmits(['ready'])
 
-const WHITE_COLOR = 0xffffff
+const DEFAULT_COLOR = 0x0
 const imageRef = ref<null | HTMLImageElement>(null)
 const canvasRef = ref<null | HTMLCanvasElement>(null)
 const context = ref<null | CanvasRenderingContext2D>(null)
-const colors = ref<number[]>(Array(props.emojiSize ** 2).fill(WHITE_COLOR))
+const colors = ref<number[]>(Array(props.emojiSize ** 2).fill(DEFAULT_COLOR))
 const hexVals = computed(() => colors.value.map(c => `#${c.toString(16).padStart(6, '0')}`))
 
 const draw = () => {
@@ -30,7 +30,7 @@ watch(
   () => props.srcUrl,
   (newVal: string) => {
     if (!newVal) {
-      colors.value = colors.value.map(() => WHITE_COLOR)
+      colors.value = colors.value.map(() => DEFAULT_COLOR)
       emits('ready', colors.value)
     }
   }
@@ -62,7 +62,7 @@ div {
   user-select: none;
 }
 span {
-  background-color: #fff;
+  background-color: #000;
   width: calc(v-bind(cellSize) * 1px);
   height: calc(v-bind(cellSize) * 1px);
   user-select: none;
