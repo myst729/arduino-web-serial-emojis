@@ -7,16 +7,16 @@
 #include <SimpleWebSerial.h>
 #include <Adafruit_NeoPixel.h>
 
-#define NEON_PIN 8
-#define NEON_NUM 64
+#define NEON_PIXEL_PIN 8
+#define NEON_PIXEL_NUM 64
 
-#define EVENT_START 1
-#define EVENT_DATA  2
-#define EVENT_END   3
+#define DATA_EVENT_PREPARE 1
+#define DATA_EVENT_READY   2
+#define DATA_EVENT_END     3
 
 SimpleWebSerial WebSerial;
-Adafruit_NeoPixel neon = Adafruit_NeoPixel(NEON_NUM, NEON_PIN, NEO_GRB + NEO_KHZ800);
-uint32_t pixels[NEON_NUM] = {0};
+Adafruit_NeoPixel neon = Adafruit_NeoPixel(NEON_PIXEL_NUM, NEON_PIXEL_PIN, NEO_GRB + NEO_KHZ800);
+uint32_t pixels[NEON_PIXEL_NUM] = {0};
 int mark = 0;
 
 void store(JSONVar data) {
@@ -28,8 +28,9 @@ void store(JSONVar data) {
 }
 
 void display() {
+  WebSerial.send("event-from-arduino", "custom-serial-event"); // test
   neon.clear();
-  for (uint8_t i = 0; i < NEON_NUM; i++) {
+  for (uint8_t i = 0; i < NEON_PIXEL_NUM; i++) {
     neon.setPixelColor(i, pixels[i]);
   }
   neon.show();
@@ -39,16 +40,16 @@ void display() {
 void handle(JSONVar data) {
   int event = data[0];
   switch (event) {
-    case EVENT_START:
-      WebSerial.send("event-from-arduino", EVENT_DATA);
+    case DATA_EVENT_PREPARE:
+      WebSerial.send("event-from-arduino", DATA_EVENT_READY);
       break;
-    case EVENT_DATA:
+    case DATA_EVENT_READY:
       store(data);
-      WebSerial.send("event-from-arduino", EVENT_DATA);
+      WebSerial.send("event-from-arduino", DATA_EVENT_READY);
       break;
-    case EVENT_END:
+    case DATA_EVENT_END:
       display();
-      WebSerial.send("event-from-arduino", EVENT_END);
+      WebSerial.send("event-from-arduino", DATA_EVENT_END);
       break;
   }
 }

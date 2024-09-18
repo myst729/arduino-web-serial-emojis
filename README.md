@@ -5,6 +5,4 @@
 - **Simple Web Serial** by [Fabian Mohr](https://github.com/fmgrafikdesign/)
 - **Adafruit_NeoPixel** by [Adafruit](https://github.com/adafruit/)
 
-## Required NPM packages
-
-- **simple-web-serial** by [Fabian Mohr](https://github.com/fmgrafikdesign/)
+[https://myst729.github.io/arduino-web-serial-emojis/](https://myst729.github.io/arduino-web-serial-emojis/)

@@ -1,0 +1,1 @@
+{"root":["./src/main.ts","./src/vite-env.d.ts","./src/assets/index.ts","./src/utils/web-serial-helper.ts","./src/app.vue","./src/components/cellcanvas.vue","./src/components/emojipicker.vue"],"version":"5.6.2"}
