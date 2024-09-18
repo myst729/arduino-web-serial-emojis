@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import { computed, onMounted, ref, useTemplateRef } from 'vue'
-import PenIcon from '@/components/PenIcon.vue'
+import EmojiPen from '@/components/EmojiPen.vue'
 
 const props = defineProps<{
   emojiSize: number,
@@ -81,7 +81,7 @@ defineExpose({ clear })
       <input type="color" v-model="penState.color" />
     </section>
   </article>
-  <PenIcon class="pen-icon" :size="64" :color="penState.color" :style="{ left: `${penState.x - 5}px`, top: `${penState.y - 5}px` }" />
+  <EmojiPen class="pen-icon" :size="64" :color="penState.color" :style="{ left: `${penState.x - 5}px`, top: `${penState.y - 5}px` }" />
   <canvas :height="emojiSize" :width="emojiSize" ref="canvasRef"></canvas>
   <img :src="srcUrl" alt="emoji" @load="drawEmoji" ref="imageRef" />
 </template>
