@@ -28,7 +28,6 @@ void store(JSONVar data) {
 }
 
 void display() {
-  WebSerial.send("event-from-arduino", "custom-serial-event"); // test
   neon.clear();
   for (uint8_t i = 0; i < NEON_PIXEL_NUM; i++) {
     neon.setPixelColor(i, pixels[i]);
@@ -39,19 +38,26 @@ void display() {
 
 void handle(JSONVar data) {
   int event = data[0];
+  JSONVar response = JSON.parse("[]");
   switch (event) {
     case DATA_EVENT_PREPARE:
-      WebSerial.send("event-from-arduino", DATA_EVENT_READY);
+      response[0] = DATA_EVENT_READY;
       break;
     case DATA_EVENT_READY:
       store(data);
-      WebSerial.send("event-from-arduino", DATA_EVENT_READY);
+      response[0] = DATA_EVENT_READY;
       break;
     case DATA_EVENT_END:
       display();
-      WebSerial.send("event-from-arduino", DATA_EVENT_END);
+      response[0] = DATA_EVENT_END;
+      break;
+    default:
+      response[0] = "unknown-event";
+      response[1] = "An unknown event was acknowledged.";
+      response[2] = JSON.stringify(data);
       break;
   }
+  WebSerial.send("event-from-arduino", response);
 }
 
 void setup() {

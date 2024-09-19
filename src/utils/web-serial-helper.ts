@@ -15,7 +15,8 @@ let customEvents: any = {}
 export const serialInit = (baudRate = 9600, bufSize = 16) => {
   bufferSize = bufSize
   connection = setupSerialConnection({ baudRate })
-  connection.on('event-from-arduino', (event: DataEvent | string) => {
+  connection.on('event-from-arduino', (response: any[]) => {
+    const [event, ...data] = [...response]
     if (event === DataEvent.READY) {
       if (buffer.length) {
         connection.send('event-to-arduino', [DataEvent.READY].concat(buffer.shift() as BufferChunk))
@@ -25,8 +26,8 @@ export const serialInit = (baudRate = 9600, bufSize = 16) => {
     }
     Object.keys(customEvents).forEach((e: string) => {
       if (e === event) {
-        customEvents[e].forEach((cb: () => void) => {
-          cb()
+        customEvents[e].forEach((cb: (data?: any[]) => void) => {
+          cb(data)
         })
       }
     })
@@ -34,14 +35,18 @@ export const serialInit = (baudRate = 9600, bufSize = 16) => {
   connection.startConnection()
 }
 
-export const serialSend = (data: number[]) => {
+export const serialSendData = (data: number[]) => {
   for (let i = 0; i < data.length; i += bufferSize) {
     buffer.push(data.slice(i, i + bufferSize))
   }
   connection?.send('event-to-arduino', [DataEvent.PREPARE])
 }
 
-export const serialListen = (event: string, callback: () => void) => {
+export const serialSend = (event: DataEvent | string, data = [] as any[]) => {
+  connection?.send('event-to-arduino', [event, ...data])
+}
+
+export const serialListen = (event: string, callback: (data?: any[]) => void) => {
   if (customEvents[event]) {
     customEvents[event].push(callback)
   } else {

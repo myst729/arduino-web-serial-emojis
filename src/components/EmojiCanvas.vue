@@ -74,7 +74,7 @@ defineExpose({ clear })
       @mousedown="updatePenState($event, { active: true })"
       @mouseup="updatePenState($event, { active: false })"
     >
-      <span v-for="i in emojiSize ** 2" :key="i" :style="{ backgroundColor: hexVals[i - 1] }" :data-index="i">{{ i }}</span>
+      <span v-for="i in emojiSize ** 2" :key="i" :style="{ backgroundColor: hexVals[i - 1] }" :data-index="i"></span>
     </div>
     <section>
       <p>Pick a color and draw</p>
