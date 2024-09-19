@@ -18,7 +18,7 @@ const clear = () => {
 }
 
 const download = () => {
-  serialSend('download-event', ['Arduino sketch is downloading.'])
+  serialSend('download-event', ['Downloading Arduino sketch.'])
 }
 
 onMounted(() => {
