@@ -1,7 +1,9 @@
 /*
+ * Tested with RP2040 (RaspberryPi Pico, etc.)
+ *
  * Required Arduino libraries:
- * (1) Simple Web Serial, by Fabian Mohr
- * (2) Adafruit_NeoPixel, by Adafruit
+ * - Simple Web Serial, by Fabian Mohr
+ * - Adafruit_NeoPixel, by Adafruit
  */
 
 #include <SimpleWebSerial.h>
