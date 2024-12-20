@@ -1,7 +1,7 @@
 {
   "name": "arduino-web-serial-emojis",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.3.0",
   "type": "module",
   "scripts": {
     "dev": "vite",
@@ -9,14 +9,14 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "simple-web-serial": "^1.0.1",
-    "vue": "^3.4.37"
+    "simple-web-serial": "^1.4.1",
+    "vue": "^3.5.13"
   },
   "devDependencies": {
-    "@types/node": "^22.5.5",
-    "@vitejs/plugin-vue": "^5.1.2",
-    "typescript": "^5.5.3",
-    "vite": "^5.4.1",
-    "vue-tsc": "^2.0.29"
+    "@types/node": "^22.10.2",
+    "@vitejs/plugin-vue": "^5.2.1",
+    "typescript": "^5.7.2",
+    "vite": "^6.0.6",
+    "vue-tsc": "^2.2.0"
   }
 }

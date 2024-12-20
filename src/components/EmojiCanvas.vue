@@ -10,8 +10,8 @@ const props = defineProps<{
 const emits = defineEmits(['ready'])
 
 const DEFAULT_COLOR = 0x0
-const imageRef =  useTemplateRef('imageRef')
-const canvasRef =  useTemplateRef('canvasRef')
+const imageRef =  useTemplateRef<HTMLImageElement>('imageRef')
+const canvasRef =  useTemplateRef<HTMLCanvasElement>('canvasRef')
 const context = ref<null | CanvasRenderingContext2D>(null)
 const colors = ref<number[]>(Array(props.emojiSize ** 2).fill(DEFAULT_COLOR))
 const penState = ref({ color: '#42b983', x: 0, y: 0, active: false, visibility: 'hidden', lastCell: -1 })

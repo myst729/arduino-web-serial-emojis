@@ -12,9 +12,9 @@
 #define NEON_PIXEL_PIN 8
 #define NEON_PIXEL_NUM 64
 
-#define DATA_EVENT_PREPARE 1
-#define DATA_EVENT_READY   2
-#define DATA_EVENT_END     3
+#define EVENT_STATE_READY  1
+#define EVENT_STATE_CHUNK  2
+#define EVENT_STATE_FINISH 3
 
 SimpleWebSerial WebSerial;
 Adafruit_NeoPixel neon = Adafruit_NeoPixel(NEON_PIXEL_NUM, NEON_PIXEL_PIN, NEO_GRB + NEO_KHZ800);
@@ -42,16 +42,16 @@ void handle(JSONVar data) {
   int event = data[0];
   JSONVar response = JSON.parse("[]");
   switch (event) {
-    case DATA_EVENT_PREPARE:
-      response[0] = DATA_EVENT_READY;
+    case EVENT_STATE_READY:
+      response[0] = EVENT_STATE_CHUNK;
       break;
-    case DATA_EVENT_READY:
+    case EVENT_STATE_CHUNK:
       store(data);
-      response[0] = DATA_EVENT_READY;
+      response[0] = EVENT_STATE_CHUNK;
       break;
-    case DATA_EVENT_END:
+    case EVENT_STATE_FINISH:
       display();
-      response[0] = DATA_EVENT_END;
+      response[0] = EVENT_STATE_FINISH;
       break;
     default:
       response[0] = "unknown-event";
